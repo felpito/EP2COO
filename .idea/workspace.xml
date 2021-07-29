@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="f0f87411-0747-4b3f-aa3e-9e4066a0da58" name="Default Changelist" comment="joe mama">
+    <list default="true" id="f0f87411-0747-4b3f-aa3e-9e4066a0da58" name="Default Changelist" comment="criação das primeiras classes">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/SeiLaBro.java" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/MarcadorDeReuniao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarcadorDeReuniao.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -29,11 +29,12 @@
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="settings.editor.selected.configurable" value="vcs.Git" />
   </component>
   <component name="RunManager">
     <configuration name="Main" type="Application" factoryName="Application">
-      <option name="MAIN_CLASS_NAME" value="MarcadorDeReuniao" />
+      <option name="MAIN_CLASS_NAME" value="Main" />
       <module name="EP2" />
       <method v="2">
         <option name="Make" enabled="true" />
@@ -84,7 +85,14 @@
       <option name="project" value="LOCAL" />
       <updated>1627061337509</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="criação das primeiras classes">
+      <created>1627152740201</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1627152740201</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -102,6 +110,7 @@
   <component name="VcsManagerConfiguration">
     <MESSAGE value="second commit" />
     <MESSAGE value="joe mama" />
-    <option name="LAST_COMMIT_MESSAGE" value="joe mama" />
+    <MESSAGE value="criação das primeiras classes" />
+    <option name="LAST_COMMIT_MESSAGE" value="criação das primeiras classes" />
   </component>
 </project>
