@@ -8,6 +8,7 @@ public class MarcadorDeReuniao {
 
     Map<String, ArrayList<Intervalo>> disponibilidades = new HashMap<>();
     Map<LocalDateTime, String> horarios = new TreeMap<>();
+    List<Horario> dataHoras = new ArrayList<>();
 
     public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes) {
         this.dataInicial = dataInicial;
@@ -106,6 +107,65 @@ public class MarcadorDeReuniao {
             } else System.out.println(" null");
             System.out.println();
         }
+    }
+
+    public void mostraSobreposicao2() {
+        addHorarios2();
+        ordenaHorarios(dataHoras);
+        LocalDateTime inicio = null;
+        boolean valido = false;
+        List<Intervalo> sobreposicao = new ArrayList<>();
+        for (Horario h : dataHoras) {
+            if (inicio == null) {
+                if (h.getTipo().equals("I")) inicio = h.getDataHora();
+            } else {
+                if (h.getTipo().equals("I") && (h.getDataHora().isAfter(inicio) || h.getDataHora().isEqual(inicio))) {
+                    inicio = h.getDataHora();
+                    valido = true;
+                }
+                if (h.getTipo().equals("F") && valido) {
+                    Intervalo intervalo = new Intervalo(inicio, h.getDataHora());
+                    sobreposicao.add(intervalo);
+                    valido = false;
+                }
+            }
+        }
+        mostraDisponibilidades();
+        System.out.println();
+        System.out.println("SOBREPOSICAO: ");
+        for (Intervalo i: sobreposicao) {
+            System.out.println("I: " + i.dataInicial + " -- F: " + i.dataFinal);
+        }
+    }
+
+    public void addHorarios2() {
+        Set<String> participantes = disponibilidades.keySet();
+        for(String s : participantes) {
+            for (Intervalo h : disponibilidades.get(s)) {
+                Horario dataHoraI = new Horario(h.dataInicial, "I");
+                Horario dataHoraF = new Horario(h.dataFinal, "F");
+                dataHoras.add(dataHoraI);
+                dataHoras.add(dataHoraF);
+            }
+        }
+    }
+
+    public void ordenaHorarios(List<Horario> horarios) {
+        Comparator<Horario> c = new Comparator<Horario>() {
+            @Override
+            public int compare(Horario h1, Horario h2) {
+                LocalDateTime d1 = h1.getDataHora();
+                LocalDateTime d2 = h2.getDataHora();
+                if(d1.getYear() != d2.getYear()) return d1.getYear() - d2.getYear();
+                else if(d1.getMonthValue() != d2.getMonthValue()) return d1.getMonthValue() - d2.getMonthValue();
+                else if(d1.getDayOfMonth() != d2.getDayOfMonth()) return d1.getDayOfMonth() - d2.getDayOfMonth();
+                else if(d1.getHour() != d2.getHour()) return d1.getHour() - d2.getHour();
+                else if(d1.getMinute() != d2.getMinute()) return d1.getMinute() - d2.getMinute();
+                else if(d1.getSecond() != d2.getSecond()) return d1.getSecond() - d2.getSecond();
+                return 0;
+            }
+        };
+        horarios.sort(c);
     }
 
 }
