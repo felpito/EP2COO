@@ -1,89 +1,111 @@
-import java.util.*;
 import java.time.*;
+import java.util.*;
 
-public class MarcadorDeReuniao{
+public class MarcadorDeReuniao {
+    LocalDate dataInicial;
+    LocalDate dataFinal;
+    Collection<String> listaDeParticipantes;
 
-    public boolean adicionaParticipante(Collection<String> listaDeParticipantes){
-        Scanner scan = new Scanner(System.in);
-        System.out.println("-------------------------------------------");
-        System.out.println("Insira o email do participante:");
-        String email = scan.nextLine();
-        System.out.println("Insira a data inicial (modelo: 2021-07-30-18-30-15, na ordem:ano-mes-dia-hora-minuto-segundo):");
-        String dataInicio = scan.nextLine();
-        String[] inicio = dataInicio.split("-");
-        int anoInicio = Integer.parseInt(inicio[0]);
-        int mesInicio = Integer.parseInt(inicio[1]);
-        int diaInicio = Integer.parseInt(inicio[2]);
-        int horaInicio = Integer.parseInt(inicio[3]);
-        int minutoInicio = Integer.parseInt(inicio[4]);
-        int segundoInicio = Integer.parseInt(inicio[5]);
-        LocalDateTime tempoInicio = LocalDateTime.of(anoInicio,mesInicio,diaInicio,horaInicio,minutoInicio,segundoInicio);
-        System.out.println("Insira a data final (modelo: 2021-07-30-18-30-15, na ordem:ano-mes-dia-hora-minuto-segundo):");
-        String dataFim = scan.nextLine();
-        String[] fim = dataFim.split("-");
-        int anoFim = Integer.parseInt(fim[0]);
-        int mesFim = Integer.parseInt(fim[1]);
-        int diaFim = Integer.parseInt(fim[2]);
-        int horaFim = Integer.parseInt(fim[3]);
-        int minutoFim = Integer.parseInt(fim[4]);
-        int segundoFim = Integer.parseInt(fim[5]);
-        LocalDateTime tempoFim = LocalDateTime.of(anoFim,mesFim,diaFim,horaFim,minutoFim,segundoFim);
-        if(tempoInicio.isAfter(tempoFim)){
-            return false;
+    Map<String, ArrayList<Intervalo>> disponibilidades = new HashMap<>();
+    Map<LocalDateTime, String> horarios = new TreeMap<>();
+
+    public void marcarReuniaoEntre(LocalDate dataInicial, LocalDate dataFinal, Collection<String> listaDeParticipantes) {
+        this.dataInicial = dataInicial;
+        this.dataFinal = dataFinal;
+        this.listaDeParticipantes = listaDeParticipantes;
+        for (String s: listaDeParticipantes) {
+            ArrayList<Intervalo> intervalos = new ArrayList<>();
+            disponibilidades.put(s, intervalos);
+            System.out.println(s + " " + disponibilidades.get(listaDeParticipantes.toString()));
         }
-        listaDeParticipantes.add(email);
-        indicaDisponibilidadeDe(email, tempoInicio, tempoFim);
-        return true;
+        System.out.println();
     }
 
-    public static void ordenaData(List<LocalDateTime> dayList){
-        System.out.println(dayList);
-        Comparator<LocalDateTime> c = new Comparator<LocalDateTime>() {
+    public void indicaDisponibilidadeDe(String participante, LocalDateTime inicio, LocalDateTime fim) {
+        Intervalo intervalo = new Intervalo(inicio, fim);
+        disponibilidades.get(participante).add(intervalo);
+        System.out.println("ADD: " + participante + "  I: "
+                + disponibilidades.get(participante).get(disponibilidades.get(participante).size()-1).getDataInicial() + " F: "
+                + disponibilidades.get(participante).get(disponibilidades.get(participante).size()-1).getDataFinal());
+        ordenaIntervalos(disponibilidades.get(participante));
+    }
+
+    public void mostraSobreposicao() {
+        addHorarios();
+        boolean mesmo = false;
+        LocalDateTime inicio = null;
+        Set<LocalDateTime> horariosEmOrdem = horarios.keySet();
+        List<Intervalo> sobreposicao = new ArrayList<>();
+        for (LocalDateTime h: horariosEmOrdem) {
+            if (inicio == null) {
+                if (horarios.get(h).equals("I")) inicio = h;
+                mesmo = true;
+            } else {
+                if (h.isAfter(inicio) && horarios.get(h).equals("I")) {
+                    inicio = h;
+                    mesmo = false;
+                }
+                if (!mesmo && horarios.get(h).equals("F")) {
+                    Intervalo intervalo = new Intervalo(inicio, h);
+                    sobreposicao.add(intervalo);
+                    inicio = null;
+                }
+            }
+        }
+        mostraDisponibilidades();
+        System.out.println();
+        System.out.println("SOBREPOSICAO: ");
+        for (Intervalo i: sobreposicao) {
+            System.out.println("I: " + i.dataInicial + " -- F: " + i.dataFinal);
+        }
+    }
+
+    public void ordenaIntervalos(List<Intervalo> intervalos) {
+        Comparator<Intervalo> c = new Comparator<Intervalo>() {
             @Override
-            public int compare(LocalDateTime d1, LocalDateTime d2) {
-                if(d1.getYear() != d2.getYear())
-                    return d1.getYear() - d2.getYear();
-                else if(d1.getMonthValue() != d2.getMonthValue())
-                    return d1.getMonthValue() - d2.getMonthValue();
-                else if(d1.getDayOfMonth() != d2.getDayOfMonth())
-                    return d1.getDayOfMonth() - d2.getDayOfMonth();
-                else if(d1.getHour() != d2.getHour())
-                    return d1.getHour() - d2.getHour();
-                else if(d1.getMinute() != d2.getMinute())
-                    return d1.getMinute() - d2.getMinute();
-                else if(d1.getSecond() != d2.getSecond())
-                    return d1.getSecond() - d2.getSecond();
+            public int compare(Intervalo i1, Intervalo i2) {
+                LocalDateTime d1 = i1.dataInicial;
+                LocalDateTime d2 = i2.dataInicial;
+                if(d1.getYear() != d2.getYear()) return d1.getYear() - d2.getYear();
+                else if(d1.getMonthValue() != d2.getMonthValue()) return d1.getMonthValue() - d2.getMonthValue();
+                else if(d1.getDayOfMonth() != d2.getDayOfMonth()) return d1.getDayOfMonth() - d2.getDayOfMonth();
+                else if(d1.getHour() != d2.getHour()) return d1.getHour() - d2.getHour();
+                else if(d1.getMinute() != d2.getMinute()) return d1.getMinute() - d2.getMinute();
+                else if(d1.getSecond() != d2.getSecond()) return d1.getSecond() - d2.getSecond();
                 return 0;
             }
         };
-        dayList.sort(c);
-        System.out.println(dayList);
+        intervalos.sort(c);
     }
 
-    public void indicaDisponibilidadeDe(String participante,LocalDateTime inicio,LocalDateTime fim){
-        Participante p = new Participante(participante, inicio, fim);
-        System.out.println("-------------------------------------------");
-        System.out.println("Participante \"" + participante + "\" criado com sucesso.");
+    public void addHorarios() {
+        Set<String> keyParticipantes = disponibilidades.keySet();
+        System.out.println();
+        for (String s : keyParticipantes) {
+            if (!disponibilidades.get(s).isEmpty()) {
+                for (int i = 0; i < disponibilidades.get(s).size(); i++) {
+                    horarios.put(disponibilidades.get(s).get(i).dataInicial, "I");
+                    horarios.put(disponibilidades.get(s).get(i).dataFinal, "F");
+                }
+            }
+        }
     }
 
-    public void mostraSobreposicao(){
-
+    public void mostraDisponibilidades() {
+        if(disponibilidades.isEmpty()) return;
+        System.out.println();
+        Set<String> keyParticipantes = disponibilidades.keySet();
+        for (String key : keyParticipantes) {
+            System.out.println("ATUAL: " + key);
+            if (!disponibilidades.get(key).isEmpty()) {
+                for (int i = 0; i < disponibilidades.get(key).size(); i++) {
+                    if (!disponibilidades.get(key).isEmpty()) {
+                        System.out.println(" I: " + disponibilidades.get(key).get(i).dataInicial + " F: " + disponibilidades.get(key).get(i).dataFinal);
+                    } else System.out.println("null");
+                }
+            } else System.out.println(" null");
+            System.out.println();
+        }
     }
-/*
-	public void marcarReuniaoEntre(LocalDate dataInicial,LocalDate dataFinal,Collection<String> listaDeParticipantes){
 
-	}
-
-	javac MarcadorDeReuniao.java && java MarcadorDeReuniao
-
-	1/4 a
-	2/5 b
-
-	1 a
-	2 b
-	4 a
-	5 b
-	...
-	3424 a
-*/
 }

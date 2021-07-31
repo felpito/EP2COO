@@ -1,6 +1,6 @@
 import java.time.*;
 
-public class Reserva{
+public class Reserva {
     String nomeDaSala ;
     LocalDateTime dataInicial;
     LocalDateTime dataFinal;
