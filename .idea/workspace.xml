@@ -4,10 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="f0f87411-0747-4b3f-aa3e-9e4066a0da58" name="Default Changelist" comment="Atualização no método mostraSobreposicao">
+    <list default="true" id="f0f87411-0747-4b3f-aa3e-9e4066a0da58" name="Default Changelist" comment="Adicionada segunda versao do mostraSobreposicao">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/GerenciadorDeSalas.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/GerenciadorDeSalas.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Main.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/MarcadorDeReuniao.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/MarcadorDeReuniao.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Reserva.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Reserva.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/Sala.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/Sala.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -122,7 +125,21 @@
       <option name="project" value="LOCAL" />
       <updated>1627696235732</updated>
     </task>
-    <option name="localTasksCounter" value="10" />
+    <task id="LOCAL-00010" summary="Adicionada segunda versao do mostraSobreposicao">
+      <created>1627760273759</created>
+      <option name="number" value="00010" />
+      <option name="presentableId" value="LOCAL-00010" />
+      <option name="project" value="LOCAL" />
+      <updated>1627760273759</updated>
+    </task>
+    <task id="LOCAL-00011" summary="Adicionada segunda versao do mostraSobreposicao">
+      <created>1627760295359</created>
+      <option name="number" value="00011" />
+      <option name="presentableId" value="LOCAL-00011" />
+      <option name="project" value="LOCAL" />
+      <updated>1627760295359</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="Vcs.Log.Tabs.Properties">
@@ -143,6 +160,7 @@
     <MESSAGE value="criação das primeiras classes" />
     <MESSAGE value="Alteração do Main" />
     <MESSAGE value="Atualização no método mostraSobreposicao" />
-    <option name="LAST_COMMIT_MESSAGE" value="Atualização no método mostraSobreposicao" />
+    <MESSAGE value="Adicionada segunda versao do mostraSobreposicao" />
+    <option name="LAST_COMMIT_MESSAGE" value="Adicionada segunda versao do mostraSobreposicao" />
   </component>
 </project>

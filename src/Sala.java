@@ -2,6 +2,7 @@ public class Sala{
     String nome;
     int capacidadeMaxima;
     String descricao;
+    String local;
 
     public Sala(String nome, int capacidadeMaxima, String descricao){
         this.nome = nome;
@@ -19,5 +20,9 @@ public class Sala{
 
     String getDescricao(){
         return descricao;
+    }
+
+    String getLocal(){
+        return local;
     }
 }
